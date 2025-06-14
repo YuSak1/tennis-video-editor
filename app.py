@@ -18,7 +18,7 @@ import io
 #     print(f"{pkg.project_name}=={pkg.version}")
 
 
-# === Helper function: Detect rally segments from audio ===
+
 def detect_rallies_from_audio(video_path, onset_delta=2.0, min_hits=3, padding=0.5):
     """
     onset_delta: max gap between hits to stay in same rally
@@ -52,7 +52,6 @@ def detect_rallies_from_audio(video_path, onset_delta=2.0, min_hits=3, padding=0
     return rallies, onset_times
 
 
-# === Plotting audio waveform with hits ===
 def generate_audio_plot(rallies, onset_times):
     plt.figure(figsize=(12, 3))
     plt.vlines(onset_times, ymin=0, ymax=1, color='r', alpha=0.6, label='Detected Hits')
@@ -73,19 +72,17 @@ def generate_audio_plot(rallies, onset_times):
     return img
 
 
-# === Core logic: Process video ===
 def process_video(video_file, progress=gr.Progress(track_tqdm=True)):
-    # Gradio gives you the path directly
     video_path = video_file
 
-    # Step 1: Detect rally segments
+    # Detect rally segments
     progress(0.15, desc="Analyzing video...")
     rally_segments, onset_times = detect_rallies_from_audio(video_path)
 
     if not rally_segments:
         return "No rally segments detected.", None
 
-    # Step 2: Extract and merge clips
+    # Extract and merge clips
     progress(0.4, desc="Extracting rally segments...")
     video = VideoFileClip(video_path)
     clips = []
@@ -101,7 +98,7 @@ def process_video(video_file, progress=gr.Progress(track_tqdm=True)):
     final_clip = concatenate_videoclips(clips)
     final_clip.write_videofile(output_path, codec="libx264", audio_codec="aac", verbose=False, logger=None)
 
-    # Step 3: Generate plot
+    # Generate plot
     progress(0.95, desc="Creating waveform plot...")
     audio_plot = generate_audio_plot(rally_segments, onset_times)
 
@@ -109,7 +106,7 @@ def process_video(video_file, progress=gr.Progress(track_tqdm=True)):
     return "Done! Here's your edited rally-only video:", output_path, audio_plot
 
 
-# === Gradio Interface ===
+# Gradio interface
 iface = gr.Interface(
     fn=process_video,
     inputs=gr.Video(label="Upload Your Tennis Match Video"),
