@@ -5,6 +5,7 @@ The Gradio app is deployed in HuggingFace → https://huggingface.co/spaces/YuSa
 
 ## Requirements
 Python 3.10.5
+
 See requirements.txt
 
 ## Approach
