@@ -1,0 +1,8 @@
+gradio==5.29.0
+moviepy==1.0.3
+librosa==0.10.1
+numpy>=1.23
+matplotlib
+scipy>=1.10
+soundfile>=0.12.1
+ffmpeg-python>=0.2.0

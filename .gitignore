@@ -1,0 +1,12 @@
+# Default ignored files
+.gradio/*
+.idea/*
+flagged/*
+local/*
+output/*
+venv/*
+videos/*
+*.mp4
+*.gif
+
+.python-version
